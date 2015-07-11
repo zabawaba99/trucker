@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -12,6 +13,11 @@ import (
 )
 
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	index, err := ioutil.ReadFile("assets/index.html")
 	if err != nil {
 		log.Fatal(err)
@@ -26,7 +32,7 @@ func main() {
 
 	r.GET("/api/entries", listEntries)
 
-	err = http.ListenAndServe(":8081", r)
+	err = http.ListenAndServe(":"+port, r)
 	if err != nil {
 		log.Fatal(err)
 	}
