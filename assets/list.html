@@ -1,0 +1,18 @@
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th ng-repeat="column in columns">
+          {{ column }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in items" class="item">
+        <td ng-repeat="(key, prop) in item track by key">
+          {{ prop }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
