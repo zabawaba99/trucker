@@ -19,7 +19,7 @@ func main() {
 
 	r := httprouter.New()
 	r.GET("/assets/*file", serveFile)
-	r.GET("/index", func(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
+	r.GET("/", func(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
 		w.Header().Add("Content-Type", "text/html")
 		w.Write(index)
 	})
