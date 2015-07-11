@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/json"
+	"flag"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -13,9 +13,20 @@ import (
 )
 
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
+	var (
+		port           string
+		firebaseURL    string
+		firebaseSecret string
+	)
+
+	flag.StringVar(&port, "port", stringOr(os.Getenv("PORT"), "8080"), "The port that the application will run on")
+	flag.StringVar(&firebaseURL, "firebase-url", os.Getenv("FIREBASE_URL"), "The URL used to communicate with Firebase")
+	flag.StringVar(&firebaseSecret, "firebase-secret", os.Getenv("FIREBASE_SECRET"), "The secret used to authenticate with Firebase")
+	flag.Parse()
+
+	a, err := NewAPI(firebaseURL, firebaseSecret)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	index, err := ioutil.ReadFile("assets/index.html")
@@ -30,7 +41,7 @@ func main() {
 		w.Write(index)
 	})
 
-	r.GET("/api/entries", listEntries)
+	r.GET("/api/entries", a.listEntries)
 
 	err = http.ListenAndServe(":"+port, r)
 	if err != nil {
@@ -67,19 +78,4 @@ type entry struct {
 	Broker     string    `json:"broker"`
 	TripNumber int       `json:"trip_number"`
 	Date       time.Time `json:"date"`
-}
-
-func listEntries(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
-	w.Header().Add("Content-Type", "application/json")
-
-	e := []entry{
-		entry{Broker: "Joe", TripNumber: 1, Date: <-time.After(time.Second)},
-		entry{Broker: "Toe", TripNumber: 2, Date: <-time.After(time.Second)},
-		entry{Broker: "Moe", TripNumber: 3, Date: <-time.After(time.Second)},
-	}
-
-	if err := json.NewEncoder(w).Encode(&e); err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		log.Println("Error encoding: %s\n", err)
-	}
 }
