@@ -23,6 +23,21 @@ func NewAPI(fbURL, fbSecret string) (*api, error) {
 	return &api{fb: fb}, nil
 }
 
+func (a *api) saveEntry(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
+	var e entry
+	if err := json.NewDecoder(req.Body).Decode(&e); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Printf("%s", err)
+		return
+	}
+
+	if _, err := a.fb.Push(e); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Printf("%s", err)
+		return
+	}
+}
+
 func (a *api) listEntries(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	w.Header().Add("Content-Type", "application/json")
 

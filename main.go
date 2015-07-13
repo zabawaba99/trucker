@@ -42,6 +42,7 @@ func main() {
 	})
 
 	r.GET("/api/entries", a.listEntries)
+	r.POST("/api/entries", a.saveEntry)
 
 	err = http.ListenAndServe(":"+port, r)
 	if err != nil {
