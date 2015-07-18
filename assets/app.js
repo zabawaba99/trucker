@@ -30,6 +30,7 @@ angular.module('trucker',['ngRoute'])
   })
   .controller("formController", function($scope, $http, $location){
     $scope.update = function(user) {
+      user.trip_number=parseInt(user.trip_number)
       $http.post('/api/entries', user)
         .success(function(data, status, headers, config) {
           console.log("SUCCESS!")

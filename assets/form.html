@@ -1,7 +1,23 @@
 <div>
-  <form novalidate>
-    Broker: <input type="text" ng-model="entry.broker"/><br />
-    Trip Number: <input type="number" ng-model="entry.trip_number"/><br />
-    <input type="submit" ng-click="update(entry)" value="Save"/>
-  </form>
+  <div class="mdl-card mdl-shadow--2dp form-card-wide">
+    <div class="mdl-card__title">
+      <h2 class="mdl-card__title-text">New Entry</h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+      <form action="#">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" id="broker" ng-model="entry.broker"/>
+          <label class="mdl-textfield__label" for="broker">Broker...</label>
+        </div>
+        <br />
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="trip-number" ng-model="entry.trip_number" />
+          <label class="mdl-textfield__label" for="trip-number">Total Miles...</label>
+          <span class="mdl-textfield__error">Input is not a number!</span>
+        </div>
+        <br />
+        <input class="mdl-button mdl-js-button mdl-button--raised" type="submit" ng-click="update(entry)" value="Save"/>
+      </form>
+    </div>
+  </div>
 </div>

@@ -4,14 +4,32 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.min.js"></script>
     <script src="assets/app.js"></script>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <!-- Material Design Lite -->
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css">
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="stylesheet" href="assets/styles.css"></link>
   </head>
   <body>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <div ng-view>
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+          <span class="mdl-layout-title">Trucky</span>
+          <!-- Add spacer, to align navigation to the right -->
+          <div class="mdl-layout-spacer"></div>
+          <!-- Colored FAB button with ripple -->
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored header-btn" onclick="location.href='#/new';">
+            <i class="material-icons">add</i>
+          </button>
+        </div>
+      </header>
+      <main class="mdl-layout__content">
+      <div class="page-content mdl-grid" ng-view>
+      </div>
+      </main>
     </div>
   </body>
 </html>

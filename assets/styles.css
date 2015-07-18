@@ -1,0 +1,11 @@
+.header-btn{
+  position: absolute;
+  right: 30px;
+  top: 35px;
+}
+.form-card-wide.mdl-card {
+  width: 512px;
+}
+.form-card-wide > .mdl-card__menu {
+  color: #fff;
+}
